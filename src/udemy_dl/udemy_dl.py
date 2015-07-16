@@ -37,7 +37,7 @@ session = Session()
 
 def get_csrf_token():
     response = session.get('https://www.udemy.com/join/login-popup')
-    match = re.search('name="csrfmiddlewaretoken" value="(.*)"', response.text)
+    match = re.search('name=\'csrfmiddlewaretoken\' value=\'(.*)\'', response.text)
     return match.group(1)
 
 def login(username, password):
