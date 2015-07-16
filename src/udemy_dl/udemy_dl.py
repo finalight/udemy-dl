@@ -36,15 +36,15 @@ session = Session()
 
 
 def get_csrf_token():
-    response = session.get('https://www.udemy.com/join/login-popup')
-    match = re.search('name="csrf" value="(.*)"', response.text)
+    response = session.get('https://www.udemy.com/join/login-submit')
+    match = re.search('name="csrfmiddlewaretoken" value="(.*)"', response.text)
     return match.group(1)
 
 def login(username, password):
     login_url = 'https://www.udemy.com/join/login-submit'
     csrf_token = get_csrf_token()
     payload = {'isSubmitted': 1, 'email': username, 'password': password,
-               'displayType': 'json', 'csrf': csrf_token}
+               'displayType': 'json', 'csrfmiddlewaretoken': csrf_token}
     response = session.post(login_url, payload)
 
     access_token = response.cookies.get('access_token')
